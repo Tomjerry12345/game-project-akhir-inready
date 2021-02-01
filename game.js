@@ -24,6 +24,7 @@ var score = 0;
 var scoreText;
 var jarum;
 var bombs;
+var gerak = 0;
 
 var game = new Phaser.Game(config);
 
@@ -134,7 +135,17 @@ function create ()
     // Bomb
     bombs = this.physics.add.group();
 
-    this.physics.add.collider(bombs)
+    // var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+    var bomb = bombs.create(250, 16, 'bomb');
+    console.log(bomb.x);
+    
+    // bombs.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    // bombs.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.allowGravity = false;
+
+    this.physics.add.collider(bombs, platform)
 
 
 }
@@ -154,6 +165,11 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-390);
+    }
+
+
+    if (bomb.x >= 270) {
+        player.setVelocityX(160);
     }
 }
 
